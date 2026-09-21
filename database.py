@@ -32,20 +32,15 @@ if sheet.cell(1, 1).value == "":
 # FUNGSI LOGIN
 # =========================
 
-def login():
-    username = input("Username : ")
-    password = input("Password : ")
+def login(username, password):
 
     data = sheet.get_all_values()
 
     for baris in data[1:]:
         if len(baris) >= 2:
             if baris[0] == username and baris[1] == password:
-                print("\nLogin berhasil!")
-                print("Selamat datang,", username)
                 return True
 
-    print("\nUsername atau password salah!")
     return False
 
 
@@ -53,9 +48,7 @@ def login():
 # FUNGSI BUAT AKUN
 # =========================
 
-def buat_akun():
-    username = input("Username baru : ")
-    password = input("Password baru : ")
+def buat_akun(username, password):
 
     data = sheet.get_all_values()
 
@@ -63,38 +56,9 @@ def buat_akun():
     for baris in data[1:]:
         if len(baris) >= 1:
             if baris[0] == username:
-                print("Username sudah digunakan!")
-                return
+                return False
 
-    # Menyimpan akun ke Google Sheets
+    # Menyimpan akun
     sheet.append_row([username, password])
 
-    print("\nAkun berhasil dibuat!")
-
-
-# =========================
-# MENU LOGIN
-# =========================
-
-while True:
-    print("\n===== MENU LOGIN =====")
-    print("1. Login")
-    print("2. Buat Akun")
-    print("3. Keluar")
-    print("======================")
-
-    pilihan = input("Pilih menu : ")
-
-    if pilihan == "1":
-        if login():
-            break
-
-    elif pilihan == "2":
-        buat_akun()
-
-    elif pilihan == "3":
-        print("Program selesai.")
-        break
-
-    else:
-        print("Pilihan tidak tersedia!")
+    return True
